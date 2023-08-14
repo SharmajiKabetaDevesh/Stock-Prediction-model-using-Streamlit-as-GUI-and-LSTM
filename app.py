@@ -52,7 +52,7 @@ scaler = MinMaxScaler(feature_range=(0, 1))
 data_training_array = scaler.fit_transform(data_training)
 
 # Loading the model saved 
-model = load_model('Trial4kera_model.h5')
+model = load_model('keras_modelv2.h5')
 
 # Testing Part
 past_100_days = data_training.tail(100)
@@ -65,7 +65,7 @@ y_test = []
 
 for i in range(100, input_data.shape[0]):
     x_test.append(input_data[i-100:i])
-    y_test.append(input_data[i, 0])  # Fix typo here
+    y_test.append(input_data[i, 0])
 
 x_test, y_test = np.array(x_test), np.array(y_test)
 y_predicted = model.predict(x_test)
@@ -83,4 +83,3 @@ plt.xlabel('Time')
 plt.ylabel('Price')
 plt.legend()
 st.pyplot(fig2)
-
