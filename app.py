@@ -82,5 +82,5 @@ plt.plot(y_predicted, 'r', label='Predicted Price')
 plt.xlabel('Time')
 plt.ylabel('Price')
 plt.legend()
-plt.show()
 st.pyplot(fig2)
+
