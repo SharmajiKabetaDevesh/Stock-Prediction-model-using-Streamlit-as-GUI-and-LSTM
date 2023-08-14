@@ -52,7 +52,7 @@ scaler = MinMaxScaler(feature_range=(0, 1))
 data_training_array = scaler.fit_transform(data_training)
 
 # Loading the model saved 
-model = load_model('Trial4kera_model.keras')
+model = load_model('Trial4kera_model.h5')
 
 # Testing Part
 past_100_days = data_training.tail(100)
