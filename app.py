@@ -21,3 +21,8 @@ df = pdr.get_data_yahoo(user_input, start, end)
 # Describing Data
 st.subheader('Data from 2010 - 2023')
 st.write(df.describe())
+
+st.subheader('Closing Price vs Time Chart')
+fig = plt.figure(figsize(12,6))
+plt.plot(df.close)
+st.pyplot(fig)
