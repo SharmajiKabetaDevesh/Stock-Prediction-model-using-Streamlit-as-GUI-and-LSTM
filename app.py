@@ -4,6 +4,8 @@ import pandas_datareader as data
 from pandas_datareader import data as pdr
 from keras.models import load_model
 import yfinance as yf    
+import tensorflow.compat.v2 as tf
+
 
 import streamlit as st
 
