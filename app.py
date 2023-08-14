@@ -12,14 +12,7 @@ import streamlit as st
 yf.pdr_override()     
 start = "2010-01-01"
 end = "2023-07-30"
-st.set_page_config(
-    page_title="Stock Prediction App",
-    page_icon=":chart_with_upwards_trend:",
-    layout="wide",
-    initial_sidebar_state="collapsed",
-    bg_color="black",
-    text_color="white"
-)
+
 st.title("Stock Trend Prediction")
 
 user_input = st.text_input("Enter Stock Ticker", 'AAPL')
