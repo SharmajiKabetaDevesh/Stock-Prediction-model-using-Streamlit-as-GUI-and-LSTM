@@ -1,22 +1,36 @@
 import numpy as np
 import pandas as pd
-import pandas_datareader as data
-from pandas_datareader import data as pdr
+from yahoofinancials import YahooFinancials
+  # Importing YahooFinancials
 from keras.models import load_model
-import yfinance as yf    
 import matplotlib.pyplot as plt
-import tensorflow.compat.v2 as tf
-
 import streamlit as st
-
-yf.pdr_override()     
-start = "2010-01-01"
-end = "2023-07-30"
 
 st.title("Stock Trend Prediction")
 
-user_input = st.text_input("Enter Stock Ticker", 'AAPL')
-df = pdr.get_data_yahoo(user_input, start, end)
+# User input for stock name
+user_input = st.text_input("Enter Company Name", 'Apple Inc.')
+time_frames = ['5 min', '15 min', '1 hour', '1 week']
+selected_time_frame = st.selectbox("Select Time Frame", time_frames)
+
+# Map user-friendly time frame to yfinance time interval
+time_frame_mapping = {
+    '5 min': '5m',
+    '15 min': '15m',
+    '1 hour': '1h',
+    '1 week': '1wk'
+}
+
+# Convert selected time frame to yfinance time interval
+selected_interval = time_frame_mapping[selected_time_frame]
+
+# Get stock ticker using yahoofinancials library
+yahoo_financials = YahooFinancials(user_input)
+stock_ticker = yahoo_financials.get_stock_ticker()
+
+# Fetch historical stock data from Yahoo Finance using yfinance
+df = yf.download(stock_ticker, start="2010-01-01", end="2023-07-30", interval=selected_interval)
+
 
 # Describing Data
 st.subheader('Data from 2010 - 2023')
