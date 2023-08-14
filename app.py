@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-import seaborn as sns  # Import seaborn
 import pandas_datareader as data
 from pandas_datareader import data as pdr
 from keras.models import load_model
