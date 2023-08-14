@@ -55,8 +55,9 @@ data_training_array = scaler.fit_transform(data_training)
 model = load_model('keras_modelv2.h5')
 
 # Testing Part
+# Testing Part
 past_100_days = data_training.tail(100)
-final_df = past_100_days.append(data_testing, ignore_index=True)
+final_df = pd.concat([past_100_days, data_testing], ignore_index=True)
 
 input_data = scaler.fit_transform(final_df)
 
@@ -65,7 +66,7 @@ y_test = []
 
 for i in range(100, input_data.shape[0]):
     x_test.append(input_data[i-100:i])
-    y_test.append(input_data[i, 0])
+    y_test.append(input_data[i, 0])  # Fix typo here
 
 x_test, y_test = np.array(x_test), np.array(y_test)
 y_predicted = model.predict(x_test)
