@@ -15,26 +15,28 @@ end = "2023-07-30"
 
 st.title("Stock Trend Prediction")
 
-user_input = st.text_input("Enter Stock Ticker", 'AAPL')
-df = pdr.get_data_yahoo(user_input, start, end)
+user_input = st.text_input("Enter Stock Name", 'Apple Inc')
+
+# Get stock data from Yahoo Finance
+df = yf.Ticker(user_input).history(start=start, end=end)
 
 # Describing Data
 st.subheader('Data from 2010 - 2023')
 st.write(df.describe())
 
-st.subheader('Closing Price vs Time Chart')
+# Closing Price vs Time Chart
 fig = plt.figure(figsize=(12, 6))
 plt.plot(df.Close)
 st.pyplot(fig)
 
-st.subheader('Closing Price vs Time Chart with 100MA')
+# Moving Averages
 ma100 = df.Close.rolling(100).mean()
 fig = plt.figure(figsize=(12, 6))
 plt.plot(ma100)
 plt.plot(df.Close)
 st.pyplot(fig)
 
-st.subheader('Closing Price vs Time Chart with 100MA & 200MA')
+# Closing Price vs Time Chart with 100MA & 200MA
 ma200 = df.Close.rolling(200).mean()
 fig1 = plt.figure(figsize=(12, 6))
 plt.plot(ma100, 'g')
@@ -62,6 +64,7 @@ past_100_days = data_training.tail(100)
 next_2_days = data_testing.head(2)
 final_df = pd.concat([past_100_days, next_2_days], ignore_index=True)
 
+# Change the code here
 input_data = scaler.fit_transform(final_df)
 
 x_test = []
@@ -69,8 +72,7 @@ y_test = []
 
 for i in range(2, input_data.shape[0]):
     x_test.append(input_data[i-2:i])
-    y_test.append(input_data[i, 0]) 
-
+    y_test.append(input_data[i, 0])
 
 x_test, y_test = np.array(x_test), np.array(y_test)
 y_predicted = model.predict(x_test)
