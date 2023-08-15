@@ -65,7 +65,7 @@ next_2_days = data_testing.head(2)
 final_df = pd.concat([past_100_days, next_2_days], ignore_index=True)
 
 # Change the code here
-input_data = scaler.fit_transform(final_df)
+input_data = scaler.transform(final_df)
 
 x_test = []
 y_test = []
