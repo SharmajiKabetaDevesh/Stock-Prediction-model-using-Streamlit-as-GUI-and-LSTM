@@ -54,6 +54,8 @@ data_training_array = scaler.fit_transform(data_training)
 # Loading the model saved 
 model = load_model('keras_modelv2.h5')
 
+# ... (previous code remains the same)
+
 # Testing Part
 past_100_days = data_training.tail(100)
 # Append next 2 days' data for prediction
@@ -86,3 +88,4 @@ plt.ylabel('Price')
 plt.legend()
 plt.show()
 st.pyplot(fig2)
+
