@@ -1,4 +1,5 @@
 import numpy as np
+
 import pandas as pd
 import pandas_datareader as data
 from pandas_datareader import data as pdr
@@ -75,6 +76,9 @@ for i in range(2, input_data.shape[0]):
     y_test.append(input_data[i, 0])
 
 x_test, y_test = np.array(x_test), np.array(y_test)
+# Add this line
+x_test = x_test.reshape((x_test.shape[0], x_test.shape[1], 1))
+
 y_predicted = model.predict(x_test)
 
 scaler = scaler.scale_
