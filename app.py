@@ -56,16 +56,18 @@ model = load_model('keras_modelv2.h5')
 
 # Testing Part
 past_100_days = data_training.tail(100)
-final_df = past_100_days.append(data_testing, ignore_index=True)
+# Append next 2 days' data for prediction
+next_2_days = data_testing.head(2)
+final_df = pd.concat([past_100_days, next_2_days], ignore_index=True)
 
 input_data = scaler.fit_transform(final_df)
 
 x_test = []
 y_test = []
 
-for i in range(100, input_data.shape[0]):
+for i in range(100, input_data.shape[0] - 2):  # Adjusted range for next 2 days
     x_test.append(input_data[i-100:i])
-    y_test.append(input_data[i, 0])  # Fix typo here
+    y_test.append(input_data[i:i+2])  # Predicting the next 2 days
 
 x_test, y_test = np.array(x_test), np.array(y_test)
 y_predicted = model.predict(x_test)
@@ -73,12 +75,12 @@ y_predicted = model.predict(x_test)
 scaler = scaler.scale_
 scale_factor = 1 / scaler[0]
 y_predicted = y_predicted * scale_factor
-y_test = y_test * scale_factor
 
+# Plotting
 st.subheader('Predictions Vs Original')
 fig2 = plt.figure(figsize=(12, 6))
-plt.plot(y_test, 'b', label='Original Price')
-plt.plot(y_predicted, 'r', label='Predicted Price')
+plt.plot(y_test.flatten(), 'b', label='Original Price')
+plt.plot(y_predicted.flatten(), 'r', label='Predicted Price')
 plt.xlabel('Time')
 plt.ylabel('Price')
 plt.legend()
