@@ -16,6 +16,19 @@ end = "2023-07-30"
 st.title("Stock Trend Prediction")
 
 user_input = st.text_input("Enter Stock Ticker", 'AAPL')
+
+# Create a drop-down menu for major stock exchanges
+stock_exchanges = ['NYSE', 'NASDAQ', 'TSE', 'LSE', 'HKEX','NSE','BSE']
+selected_stock_exchange = st.selectbox('Select a stock exchange:', stock_exchanges)
+
+# Concatenate the stock exchange with the stock exchange keyword
+stock_exchange_keyword = user_input + '.'+selected_stock_exchange
+
+# Search for the stock price in the yfinance API
+df = yf.download(stock_exchange_keyword, start, end)
+
+
+
 df = pdr.get_data_yahoo(user_input, start, end)
 
 # Describing Data
