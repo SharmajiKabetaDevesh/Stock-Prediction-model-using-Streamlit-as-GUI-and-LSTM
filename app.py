@@ -6,6 +6,7 @@ from keras.models import load_model
 import yfinance as yf    
 import matplotlib.pyplot as plt
 import tensorflow.compat.v2 as tf
+
 import streamlit as st
 
 yf.pdr_override()     
@@ -79,15 +80,10 @@ scaler = scaler.scale_
 scale_factor = 1 / scaler[0]
 y_predicted = y_predicted * scale_factor
 
-# Plot predictions vs original
+# Plotting
+st.subheader('Predictions Vs Original')
 fig2 = plt.figure(figsize=(12, 6))
-
-# Plot original data
-plt.plot(df.index, df['Close'], 'b', label='Original Price')
-
-# Plot predicted data
-plt.plot(df.index[-len(y_predicted):], y_predicted, 'r', label='Predicted Price')
-
+plt.plot(y_predicted, 'r', label='Predicted Price')
 plt.xlabel('Time')
 plt.ylabel('Price')
 plt.legend()
