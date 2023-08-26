@@ -78,7 +78,8 @@ y_predicted = model.predict(x_test)
 scaler = scaler.scale_
 scale_factor = 1 / scaler[0]
 y_predicted = y_predicted * scale_factor
-st.subheader('Predictions Vs Original')
+
+# Plot predictions vs original
 fig2 = plt.figure(figsize=(12, 6))
 
 # Plot original data
@@ -91,4 +92,3 @@ plt.xlabel('Time')
 plt.ylabel('Price')
 plt.legend()
 st.pyplot(fig2)
- 
