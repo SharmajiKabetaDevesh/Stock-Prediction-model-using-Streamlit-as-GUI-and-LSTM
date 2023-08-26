@@ -31,6 +31,8 @@ st.pyplot(fig)  # Displays the plot in Streamlit
 
 
 # Splitting data into training and testing
+data_training = pd.DataFrame(df['Close'][0:int(len(df)*0.70)])
+
 if not data_training.empty:
     data_training_array = scaler.fit_transform(data_training)
 else:
