@@ -1,4 +1,3 @@
-import numpy as np
 import pandas as pd
 import pandas_datareader as data
 from pandas_datareader import data as pdr
@@ -25,16 +24,9 @@ selected_stock_exchange = st.selectbox('Select a stock exchange:', stock_exchang
 stock_exchange_keyword = user_input + '.'+selected_stock_exchange
 
 # Search for the stock price in the yfinance API
-try:
-    df = yf.download(stock_exchange_keyword, start, end)
-except Exception as e:
-    st.error(f"Failed to fetch data for {stock_exchange_keyword}: {e}")
-    st.stop()
+df = yf.download(stock_exchange_keyword, start, end)
 
-# Check if data is available
-if df.empty:
-    st.error(f"No data available for {stock_exchange_keyword}")
-    st.stop()
+
 
 df = pdr.get_data_yahoo(user_input, start, end)
 
@@ -42,26 +34,18 @@ df = pdr.get_data_yahoo(user_input, start, end)
 st.subheader('Data from 2010 - 2023')
 st.write(df.describe())
 
-st.subheader('Closing Price vs Time Chart with Price Range')
-min_price = df['Close'].min()
-max_price = df['Close'].max()
-
+st.subheader('Closing Price vs Time Chart')
 fig = plt.figure(figsize=(12, 6))
-plt.plot(df.index, df.Close)
-plt.fill_between(df.index, min_price, max_price, color='skyblue', alpha=0.4)  # Add shaded region
-plt.ylim([min_price, max_price])
-plt.xlabel('Time')
-plt.ylabel('Price')
+plt.plot(df.Close)
+plt.ylim([df.Close.min(), df.Close.max()])
 st.pyplot(fig)
 
 st.subheader('Closing Price vs Time Chart with 100MA')
 ma100 = df.Close.rolling(100).mean()
 fig = plt.figure(figsize=(12, 6))
 plt.plot(ma100)
-plt.plot(df.index, df.Close)
+plt.plot(df.Close)
 plt.ylim([df.Close.min(), df.Close.max()])
-plt.xlabel('Time')
-plt.ylabel('Price')
 st.pyplot(fig)
 
 st.subheader('Closing Price vs Time Chart with 100MA & 200MA')
@@ -69,16 +53,13 @@ ma200 = df.Close.rolling(200).mean()
 fig1 = plt.figure(figsize=(12, 6))
 plt.plot(ma100, 'g')
 plt.plot(ma200, 'r')
-plt.plot(df.index, df.Close)
+plt.plot(df.Close)
 plt.ylim([df.Close.min(), df.Close.max()])
-plt.xlabel('Time')
-plt.ylabel('Price')
 st.pyplot(fig1)
 
 # Splitting data into training and testing
 data_training = pd.DataFrame(df['Close'][0:int(len(df)*0.70)])
 data_testing = pd.DataFrame(df['Close'][int(len(df)*0.70):int(len(df))])
-
 
 from sklearn.preprocessing import MinMaxScaler
 scaler = MinMaxScaler(feature_range=(0, 1))
