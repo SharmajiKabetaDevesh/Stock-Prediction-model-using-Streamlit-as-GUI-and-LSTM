@@ -25,7 +25,16 @@ selected_stock_exchange = st.selectbox('Select a stock exchange:', stock_exchang
 stock_exchange_keyword = user_input + '.'+selected_stock_exchange
 
 # Search for the stock price in the yfinance API
-df = yf.download(stock_exchange_keyword, start, end)
+try:
+    df = yf.download(stock_exchange_keyword, start, end)
+except Exception as e:
+    st.error(f"Failed to fetch data for {stock_exchange_keyword}: {e}")
+    st.stop()
+
+# Check if data is available
+if df.empty:
+    st.error(f"No data available for {stock_exchange_keyword}")
+    st.stop()
 
 df = pdr.get_data_yahoo(user_input, start, end)
 
