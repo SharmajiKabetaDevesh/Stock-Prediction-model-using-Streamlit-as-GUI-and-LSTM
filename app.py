@@ -17,7 +17,7 @@ st.title("Stock Trend Prediction")
 user_input = st.text_input("Enter Stock Ticker", 'AAPL')
 
 # Create a drop-down menu for major stock exchanges
-stock_exchanges = ['NYSE', 'NASDAQ', 'TSE', 'LSE', 'HKEX','NSE','BSE']
+stock_exchanges = ['NS','B0']
 selected_stock_exchange = st.selectbox('Select a stock exchange:', stock_exchanges)
 
 # Concatenate the stock exchange with the stock exchange keyword
