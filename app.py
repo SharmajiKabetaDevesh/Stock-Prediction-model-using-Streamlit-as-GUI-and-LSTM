@@ -5,7 +5,7 @@ from keras.models import load_model
 import yfinance as yf    
 import matplotlib.pyplot as plt
 import tensorflow.compat.v2 as tf
-
+import numpy as np
 import streamlit as st
 
 yf.pdr_override()     
