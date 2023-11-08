@@ -12,7 +12,7 @@ yf.pdr_override()
 start = "2010-01-01"
 end = "2023-07-30"
 
-st.title("Stock Trend Prediction")
+st.title("Trade Analysis")
 
 user_input = st.text_input("Enter Stock Ticker", 'AAPL')
 
